@@ -1,5 +1,6 @@
 // ConsoleApplication1.cpp : Defines the entry point for the console application.
-//
+// Author: Minghao Liu (Kevlin)
+// All rights reserved.
 
 #include "stdafx.h"
 #include <iostream>
@@ -51,8 +52,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		counter++;
 
 	}
-	delete[] player1;
-	delete[] player2;
+	free(player1);
+	free(player2);
 	destroy();
 	getchar();
 	return 0;
@@ -73,16 +74,18 @@ void shuffleDeck() {
 	// do nothing now.
 	std::vector<int> appeared = {};
 	Poker* newDeck = (Poker*)malloc(POKER_SUM * sizeof(Poker));
-	while (appeared.size < POKER_SUM) {
+	int counter = 0;
+	while (counter < POKER_SUM) {
 		int randN = rand() % POKER_SUM;
-		while (!std::find(appeared.begin, appeared.end, randN)) {
+		while (std::find(appeared.begin(), appeared.end(), randN) != appeared.end()) {
 			randN = rand() % POKER_SUM;
 		}
+		counter++;
 	}
 }
 
 void destroy() {
-	delete[] deck;
+	free(deck);
 }
 
 std::string poker2str(Poker p) {
