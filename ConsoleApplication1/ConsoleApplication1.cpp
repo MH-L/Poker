@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #define POKER_SUM 54
+#define RANK_SUM 13
 
 struct Poker {
 	int club;
@@ -35,13 +36,19 @@ int _tmain(int argc, _TCHAR* argv[])
 
 void initialize() {
 	deck = (Poker*)malloc(POKER_SUM * sizeof(Poker));
-}
-
-bool noCardLeft() {
 	*deck = Poker{ 0, 0 };
 	*(deck + 1) = Poker{ 0, 1 };
 	for (int i = 2; i < POKER_SUM; i++) {
-
+		int clubNum = 1 + (i - 1) / RANK_SUM;
+		int rankNum = (i - 1) % RANK_SUM;
+		*(deck + i) = Poker{ clubNum, rankNum };
 	}
 }
 
+bool noCardLeft() {
+
+}
+
+void shuffleDeck() {
+
+}
