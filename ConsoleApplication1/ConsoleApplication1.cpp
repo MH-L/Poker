@@ -25,14 +25,15 @@ Poker* deck;
 void initialize();
 void shuffleDeck();
 void destroy();
+std::string poker2str(Poker);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
 	initialize();
 	Poker* player1;
 	Poker* player2;
-	player1 = (Poker*)malloc(POKER_SUM / 2 * sizeof(Poker*));
-	player2 = (Poker*)malloc(POKER_SUM / 2 * sizeof(Poker*));
+	player1 = (Poker*)malloc(POKER_SUM / 2 * sizeof(Poker));
+	player2 = (Poker*)malloc(POKER_SUM / 2 * sizeof(Poker));
 	std::string userIn;
 	std::cout << "Welcome to Poker Game." << std::endl;
 	std::cout << "Would you like to play first or second?" << std::endl;
@@ -44,7 +45,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	int counter = 0;
 	while (counter < POKER_SUM) {
 		int index = counter / 2;
-		printf("Now you get a new card, which is %s\n", "hehe");
+		printf("Now you get a new card, which is %s\n", poker2str(*(deck + counter)));
 		if (counter % 2 == 0)
 			*(player1 + index) = *(deck + counter);
 		else
@@ -80,6 +81,7 @@ void shuffleDeck() {
 		while (std::find(appeared.begin(), appeared.end(), randN) != appeared.end()) {
 			randN = rand() % POKER_SUM;
 		}
+		*(newDeck + counter) = *(deck + randN);
 		counter++;
 	}
 }
@@ -110,7 +112,8 @@ std::string poker2str(Poker p) {
 		returnVal = "Club ";
 		break;
 	default:
-		throw "Invalid Poker Card!";
+		// throw "Invalid Poker Card!";
+		return "Error!";
 	}
 
 	returnVal += p.rank;
