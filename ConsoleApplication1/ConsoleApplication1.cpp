@@ -4,11 +4,18 @@
 #include "stdafx.h"
 #include <iostream>
 #include <string>
+#include <vector>
+#include <stdlib.h>
+#include <algorithm>
 #define POKER_SUM 54
 #define RANK_SUM 13
+#define SPADE 1
+#define HEART 2
+#define DIAMOND 3
+#define CLUB 4
 
 struct Poker {
-	int club;
+	int suit;
 	int rank;
 };
 
@@ -56,16 +63,53 @@ void initialize() {
 	*deck = Poker{ 0, 0 };
 	*(deck + 1) = Poker{ 0, 1 };
 	for (int i = 2; i < POKER_SUM; i++) {
-		int clubNum = 1 + (i - 1) / RANK_SUM;
+		int suitNum = 1 + (i - 1) / RANK_SUM;
 		int rankNum = (i - 1) % RANK_SUM;
-		*(deck + i) = Poker{ clubNum, rankNum };
+		*(deck + i) = Poker{ suitNum, rankNum };
 	}
 }
 
 void shuffleDeck() {
 	// do nothing now.
+	std::vector<int> appeared = {};
+	Poker* newDeck = (Poker*)malloc(POKER_SUM * sizeof(Poker));
+	while (appeared.size < POKER_SUM) {
+		int randN = rand() % POKER_SUM;
+		while (!std::find(appeared.begin, appeared.end, randN)) {
+			randN = rand() % POKER_SUM;
+		}
+	}
 }
 
 void destroy() {
 	delete[] deck;
+}
+
+std::string poker2str(Poker p) {
+	std::string returnVal = "";
+	switch (p.suit) {
+	case 0:
+		if (p.rank == 0)
+			returnVal = "Big Joker";
+		else if (p.rank == 1)
+			returnVal = "Small Joker";
+		return returnVal;
+	case 1:
+		returnVal = "Spade ";
+		break;
+	case 2:
+		returnVal = "Heart ";
+		break;
+	case 3:
+		returnVal = "Diamond ";
+		break;
+	case 4:
+		returnVal = "Club ";
+		break;
+	default:
+		throw "Invalid Poker Card!";
+	}
+
+	returnVal += p.rank;
+	return returnVal;
 }
