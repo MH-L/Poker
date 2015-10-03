@@ -4,10 +4,18 @@
 #include "stdafx.h"
 #include <iostream>
 #include <string>
+#define POKER_SUM 54
 
+struct Poker {
+	int club;
+	int rank;
+};
+
+Poker* deck;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	initialize();
 	std::string userIn;
 	std::cout << "Welcome to Poker Game." << std::endl;
 	std::cout << "Would you like to play first or second?" << std::endl;
@@ -16,7 +24,24 @@ int _tmain(int argc, _TCHAR* argv[])
 	if (userIn.compare("yes") || userIn.compare("no")) {
 		printf("You have succeeded.");
 	}
+	while (true) {
+		std::cout << "Now you get a new card, which is " << std::endl;
+		if (noCardLeft())
+			break;
+	}
 	getchar();
 	return 0;
+}
+
+void initialize() {
+	deck = (Poker*)malloc(POKER_SUM * sizeof(Poker));
+}
+
+bool noCardLeft() {
+	*deck = Poker{ 0, 0 };
+	*(deck + 1) = Poker{ 0, 1 };
+	for (int i = 2; i < POKER_SUM; i++) {
+
+	}
 }
 
