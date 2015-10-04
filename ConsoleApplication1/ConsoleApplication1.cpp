@@ -50,6 +50,8 @@ namespace poker {
 		return 0;
 	}
 
+	Poker* deck;
+
 	void initialize() {
 		deck = (Poker*)malloc(POKER_SUM * sizeof(Poker));
 		*deck = Poker{ 0, 0 };
